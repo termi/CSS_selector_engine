@@ -1,7 +1,8 @@
-# Super fast css selector engine
+# Super fast css selector engine with CSS4 selector API support
 
 ## Goal
 
+- Support CSS3 as well as part of CSS4 selector API
 - Be lightweight
 - Be fastest
 - Be customizable
@@ -11,7 +12,7 @@
 
 - document.querySelector
 - document.querySelectorAll
-- document.getElementsByClassName
+- document.getElementsByClassName for IE < 9
 - document.documentElement.querySelector
 - document.documentElement.querySelectorAll
 - document.documentElement.getElementsByClassName
@@ -22,6 +23,29 @@
 - Element.prototype.getElementsByClassName
 - Element.prototype.matchesSelector
 - Element.prototype.matches
+
+## CSS4 Supporting selectors
+
+### Subject of a selector
+```javascript
+document.querySelector("div! a[href*=twitter]");// div
+document.querySelectorAll("body footer! div");// [footer]
+```
+### :scope pseudo-class
+```javascript
+<div node>.querySelector("div:scope a");// if <div node>.tagName == "DIV" -> result is <a> element, child of <div node>
+<node>.querySelectorAll(":scope>*");// all direct childs or <node>
+document.documentElement.querySelector(":scope>*");// regulary would be <head>
+document.documentElement.querySelector(":scope>*:nth-child(2n+1)");// regulary would be <head> also
+document.documentElement.querySelector(":scope>*:nth-child(2n+2)");// regulary would be <body> also
+```
+Note: _:scope_ pseudo-class not in first compound selector not supported!
+This examples will throw "SYNTAX_ERR" exception:
+```javascript
+document.querySelector("div div:scope a")
+```
+### Reference combination
+Working on it
 
 ## Using in IE < 8
 
@@ -45,7 +69,7 @@ The are few [GGC](http://closure-compiler.appspot.com/home) flags in script. You
 
 - Build for non-IE lt 8
 
-	set the value of '__GCC__NOT_ONLY_IELT8_SUPPORT__' to 'true' and compile _/__SRC/CSS_selector_engine.js_ using (Google Closure Compiler)[http://closure-compiler.appspot.com/home]
+	set the value of '\_\_GCC\_\_NOT\_ONLY\_IELT8\_SUPPORT\_\_' to 'true' and compile _CSS\_selector\_engine.js_ using [Google Closure Compiler](http://closure-compiler.appspot.com/home)
 
 ## TODO
 
