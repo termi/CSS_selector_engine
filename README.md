@@ -37,7 +37,7 @@ document.querySelectorAll("body footer! div");// [footer]
 <node>.querySelectorAll(":scope>*");// all direct childs or <node>
 document.documentElement.querySelector(":scope>*");// regulary would be <head>
 document.documentElement.querySelector(":scope>*:nth-child(2n+1)");// regulary would be <head> also
-document.documentElement.querySelector(":scope>*:nth-child(2n+2)");// regulary would be <body> also
+document.documentElement.querySelector(":scope>*:nth-child(2n+2)");// regulary would be <body>
 ```
 Note: _:scope_ pseudo-class not in first compound selector not supported!
 This examples will throw "SYNTAX_ERR" exception:
