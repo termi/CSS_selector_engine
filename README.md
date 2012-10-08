@@ -28,8 +28,8 @@
 
 ### Subject of a selector
 ```javascript
-document.querySelector("div! a[href*=twitter]");// div
-document.querySelectorAll("body footer! div");// [footer]
+document.querySelector("div! a[href*=twitter]");// div that has **a** element with _href_ attribute that contains "twitter"
+document.querySelectorAll("body footer! div");// NodeList:[footer], if <footer> is in <body> and <footer> contains <div>
 ```
 ### :scope pseudo-class
 ```javascript
@@ -73,8 +73,8 @@ The are few [GGC](http://closure-compiler.appspot.com/home) flags in script. You
 
 ## TODO
 
-- Tests: coming coon
-- Benchmark: coming coon
+- Tests: coming soon
+- Benchmark: coming soon
 
 ## License
 
