@@ -538,9 +538,9 @@ function queryCompoundSelector(selectorArr, roots, globalResult, globalResultAsS
 					css3Pseudo_add[2][0] = void 0;// delete unnecessary string
 				}
 
-				nodeIndex__Last = css3Pseudo_add[3] = _tmp2 ? "nodeIndexLast" : "nodeIndex";
-				first_last__Child = css3Pseudo_add[4] = _tmp2 ? "lastChild" : "firstChild";
-				previous_next__Sibling = css3Pseudo_add[5] = _tmp2 ? "previousSibling" : "nextSibling";
+				css3Pseudo_add[3] = _tmp2 ? "nodeIndexLast" : "nodeIndex";
+				css3Pseudo_add[4] = _tmp2 ? "lastChild" : "firstChild";
+				css3Pseudo_add[5] = _tmp2 ? "previousSibling" : "nextSibling";
 			}
 			else if(_tmp2 === 17) {//:scope pseudo class
 				if(!CSS4_scope_isFirstRule) {
@@ -765,7 +765,7 @@ function queryCompoundSelector(selectorArr, roots, globalResult, globalResultAsS
 								break;
 
 							case 2://'=' // W3C "an E element whose "nodeAttrCurrent_value" attribute nodeAttrExpected_value is exactly equal to "nodeAttrExpected_value"
-								match = /*nodeAttrCurrent_value && */nodeAttrCurrent_value === nodeAttrExpected_value;
+								match = nodeAttrCurrent_value === nodeAttrExpected_value;
 								break;
 
 							case 3://'&=' // from w3.prg "an E element whose "nodeAttrCurrent_value" attribute nodeAttrExpected_value is a list of space-separated nodeAttrExpected_value's, one of which is exactly equal to "nodeAttrExpected_value"
@@ -782,11 +782,11 @@ function queryCompoundSelector(selectorArr, roots, globalResult, globalResultAsS
 								break;
 
 							case 7://'|=' // W3C "an E element whose "nodeAttrCurrent_value" attribute has a hyphen-separated list of nodeAttrExpected_value's beginning (from the left) with "nodeAttrExpected_value"
-								match = (/*nodeAttrCurrent_value && */(nodeAttrCurrent_value === nodeAttrExpected_value || !!~nodeAttrCurrent_value.indexOf(nodeAttrExpected_value + '-')));
+								match = ((nodeAttrCurrent_value === nodeAttrExpected_value || !!~nodeAttrCurrent_value.indexOf(nodeAttrExpected_value + '-')));
 								break;
 
 							case 9://'~='
-								match = /*nodeAttrCurrent_value && */!!~(" " + nodeAttrCurrent_value.replace(RE__queryCompoundSelector__spaces, " ") + " ").indexOf(" " + nodeAttrExpected_value + " ");
+								match = !!~(" " + nodeAttrCurrent_value.replace(RE__queryCompoundSelector__spaces, " ") + " ").indexOf(" " + nodeAttrExpected_value + " ");
 								break;
 						}
 					}
@@ -1214,47 +1214,19 @@ _matchesSelector =
 	_document_documentElement["webkitMatchesSelector"] ||
 	_document_documentElement["mozMatchesSelector"] ||
 	_document_documentElement["msMatchesSelector"] ||
-	_document_documentElement["oMatchesSelector"] || __GCC__NOT_ONLY_IELT8_SUPPORT__ && "querySelector" in document ?
-	function(selector) {
-		if(!selector)return false;
-		if(selector === "*")return true;
-		if(selector === ":root" && this === _document_documentElement)return true;
-		if(selector === "body" && this === document.body)return true;
-
-		var thisObj = this,
-			parent,
-			i,
-			str,
-			tmp,
-			match = false;
-
-		if(!RE_matchSelector__isSimpleSelector.test(selector) && (parent = thisObj.parentNode) && "querySelector" in parent) {
-			match = parent.querySelector(selector) === thisObj;
-		}
-
-		if(!match && (parent = thisObj.ownerDocument)) {
-			tmp = parent.querySelectorAll(selector);
-			for (i in tmp ) if(Object.prototype.hasOwnProperty.call(tmp, i)) {
-				match = tmp[i] === thisObj;
-				if(match)return true;
-			}
-		}
-		return match;
-	}
-	:
+	_document_documentElement["oMatchesSelector"] ||
 	function(selector) {
 		if(!selector)return false;
 		if(selector === "*")return true;
 		if(this === _document_documentElement && selector === ":root")return true;
 		if(this === document.body && selector.toUpperCase() === "BODY")return true;
 
-		//selector = _String_trim.call(selector.replace(RE__queryComplexSelector__doubleSpaces, "$1"));
-
-		var thisObj = this,
-			isSimpleSelector,
-			tmp,
-			match = false,
-			i;
+		var thisObj = this
+			, isSimpleSelector
+			, tmp
+			, match = false
+			, i
+		;
 
 		selector = _String_trim.call(selector);
 
@@ -1270,9 +1242,16 @@ _matchesSelector =
 			}
 		}
 		else if(!RE_matchSelector__isSimpleSelector.test(selector)) {//easy selector
-			tmp = queryCompoundSelector(selector.match(RE__queryCompoundSelector__selectorMatch), null, false, null, thisObj, true);
-
-			return tmp[0] === thisObj;
+			if((tmp = thisObj.parentNode) && native_querySelector) {
+				try {
+					return native_querySelector.call(tmp, selector) === thisObj;
+				}
+				catch(e) {
+				
+				}
+			}
+			
+			return queryCompoundSelector(selector.match(RE__queryCompoundSelector__selectorMatch), null, false, null, thisObj, true)[0] === thisObj;
 		}
 		else {
 			tmp = queryComplexSelector.call(thisObj.ownerDocument, selector);
