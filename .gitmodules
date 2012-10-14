@@ -1,0 +1,6 @@
+[submodule "test/qunit"]
+	path = test/qunit
+	url = https://github.com/jquery/qunit
+[submodule "speed/benchmark.js"]
+	path = speed/benchmark.js
+	url = git://github.com/bestiejs/benchmark.js.git

@@ -1,0 +1,8 @@
+.note
+#title
+div[class=example]
+p:first-child
+div p
+div > p
+div + p
+div ~ p

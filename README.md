@@ -20,7 +20,7 @@
 - document.documentElement.matches
 - Element.prototype.querySelector
 - Element.prototype.querySelectorAll
-- Element.prototype.getElementsByClassName
+- Element.prototype.getElementsByClassName for IE < 9
 - Element.prototype.matchesSelector
 - Element.prototype.matches
 
@@ -47,6 +47,20 @@ document.querySelector("div div:scope a")
 ### Reference combination
 Working on it
 
+## Installation
+ - Without IE6/7 support:
+
+            <script src="__COMPILED/CSS_selector_engine.js"></script>
+
+ - With IE6/7 support:
+
+            <!--[if lt IE 8]>
+			<script src="__COMPILED/CSS_selector_engine.ielt8.js"></script>
+			<![endif]-->
+			<!--[if gt IE 7]><!-->
+			<script src="__COMPILED/CSS_selector_engine.js"></script>
+			<!--<![endif]-->
+
 ## Using in IE < 8
 
 ```javascript
@@ -70,11 +84,6 @@ The are few [GGC](http://closure-compiler.appspot.com/home) flags in script. You
 - Build for non-IE lt 8
 
 	set the value of '\_\_GCC\_\_NOT\_ONLY\_IELT8\_SUPPORT\_\_' to 'true' and compile _CSS\_selector\_engine.js_ using [Google Closure Compiler](http://closure-compiler.appspot.com/home)
-
-## TODO
-
-- Tests: coming soon
-- Benchmark: coming soon
 
 ## License
 
