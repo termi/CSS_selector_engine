@@ -6,3 +6,4 @@ div p
 div > p
 div + p
 div ~ p
+p:nth-child(n)
