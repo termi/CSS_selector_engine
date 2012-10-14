@@ -1,4 +1,4 @@
-/* MIT License (c) copyright Egor Halimonenko (termi1uc1@gmail.com|github.com/termi) */
+/* @license qS[A]/matches polyfill | @version 1.0 | MIT License | github.com/termi */
 ;(function(){"use strict";
 var i=!0,j=null,q=!1,s=window;function v(){throw Error("SYNTAX_ERR");}
 function aa(a,c,e,h,d,l,r,y,f){var O=e||[],t=!!d,B=!t&&c&&"number"==typeof c.length&&void 0===c.nodeType,m=t&&(c={})||(!c?document:B?c[0]:c),D,P=0,b,w,k,J=ba[(a[1]||"").replace(ca,"")]||0,$=2<J,E=a[2],Q=!!E,F=a[3],K=!!F,G=a[4],L=!!G,ja="*"===E,u,R,z,x,g,n,C,ka,H,la,p,M;if(Q)if(E=ja?j:E.replace("|",":")){if(z=m)z=(z=m&&(m.ownerDocument||m).documentElement)?"HTML"!==z.nodeName:q;(n=z)||(E=E.toUpperCase())}else Q=q;if(L&&(G=G.replace(da," "),!A||1!==J))ka=RegExp(G.replace(I,ea));if(z=a[5]){z=fa.call(z,
